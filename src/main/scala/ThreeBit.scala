@@ -121,8 +121,7 @@ object Interpreter {
     steps(prog, Running(cfg))
 }
 
-/** Command-line entry for the three bit language */
-object ThreeBit extends App {
+object Parser {
 
   private val initialPc: Pc = 0
 
@@ -146,7 +145,7 @@ object ThreeBit extends App {
     case 6 => Ydv(parseComboOp(op))
     case 7 => Zdv(parseComboOp(op))
 
-  private def parseProg(str: String): Prog =
+  def parseProg(str: String): Prog =
     def parseInstrOps(instOps: Seq[(Int, Int)]): Prog =
       instOps.foldRight(List.empty)((instOp, acc) => parseInst(instOp._1, instOp._2) :: acc)
     val tokens = str.split(",").map(_.trim.toInt)
@@ -159,7 +158,7 @@ object ThreeBit extends App {
 
   private def parseReg(str: String): Int = str.toInt
 
-  private def parse(): (Prog, Config) =
+  def parse(): (Prog, Config) =
     val x = parseReg(readLine())
     val y = parseReg(readLine())
     val z = parseReg(readLine())
@@ -167,6 +166,11 @@ object ThreeBit extends App {
     val initialConfig: Config = (initialPc, initialReg)
     val prog = parseProg(readLine())
     (prog, initialConfig)
+}
+
+/** Command-line entry for the three bit language */
+object ThreeBit extends App {
+  import Parser._
 
   private val (prog, conf) = parse()
   val (state, out) = Interpreter.run(prog, conf)
