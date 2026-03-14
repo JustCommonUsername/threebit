@@ -28,6 +28,7 @@ Simple unit tests are in `ThreeBitUnitTest.scala`.
 Here I write operational semantics of this language, which I wrote from the task description and
 used to implement interpreter.
 
-```latex
-$test$
-```
+[](JetBrains%20Internship%20Application,%20ThreeBit%20Operational%20Semantics.jpg)
+
+Sorry for handwritten notes, I'll tex them later.
+
