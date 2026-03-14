@@ -144,6 +144,7 @@ object Parser {
     case 5 => Out(parseComboOp(op))
     case 6 => Ydv(parseComboOp(op))
     case 7 => Zdv(parseComboOp(op))
+    case _ => throw NotImplementedError("Instructions are only allowed to be in interval 0..7")
 
   def parseProg(str: String): Prog =
     def parseInstrOps(instOps: Seq[(Int, Int)]): Prog =
