@@ -108,17 +108,16 @@ object Interpreter {
     case _ => (state, List.empty)
   }
 
-  private def steps(prog: Prog, state: State): (State, Out) =
+  private def steps(prog: Prog, state: State, out: Out): (State, Out) =
     val (state1, out1) = step(prog, state)
     state1 match {
       case State.Running(cfg) =>
-        val (state2, out2) = steps(prog, state1)
-        (state2, out1 ++ out2)
-      case _ => (state1, out1)
+        steps(prog, state1, out ++ out1)
+      case _ => (state1, out ++ out1)
     }
 
   def run(prog: Prog, cfg: Config): (State, Out) =
-    steps(prog, Running(cfg))
+    steps(prog, Running(cfg), List.empty)
 }
 
 object Parser {
